@@ -2,9 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Sparkles, Music, LogOut, Gamepad2 } from "lucide-react";
+import { Sparkles, Music, LogOut, Gamepad2, User, Wind } from "lucide-react";
 import MoodSelector from "@/components/MoodSelector";
 import MoodHistory from "@/components/MoodHistory";
+import BreathingExercise from "@/components/BreathingExercise";
+import ThemeToggle from "@/components/ThemeToggle";
+import Analytics from "@/components/Analytics";
 import { toast } from "sonner";
 
 const Dashboard = () => {
@@ -36,10 +39,17 @@ const Dashboard = () => {
             </div>
             <span className="text-xl font-bold">MoodSense</span>
           </div>
-          <Button onClick={handleLogout} variant="ghost" size="sm">
-            <LogOut className="w-4 h-4 mr-2" />
-            Logout
-          </Button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Button onClick={() => navigate("/profile")} variant="ghost" size="sm">
+              <User className="w-4 h-4 mr-2" />
+              Profile
+            </Button>
+            <Button onClick={handleLogout} variant="ghost" size="sm">
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -75,7 +85,7 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <Card className="shadow-[var(--shadow-glow)]">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -91,8 +101,12 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
+          <BreathingExercise />
+
           <MoodHistory />
         </div>
+
+        <Analytics />
       </main>
     </div>
   );

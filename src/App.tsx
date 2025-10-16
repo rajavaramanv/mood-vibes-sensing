@@ -7,6 +7,7 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import BubbleGame from "./pages/BubbleGame";
 import Playlist from "./pages/Playlist";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/game" element={<BubbleGame />} />
           <Route path="/playlist" element={<Playlist />} />
+          <Route path="/profile" element={<Profile />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
