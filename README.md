@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/586a336e-06e2-4477-80f7-a1c810cfbb99
+**URL**: https://mood-vibes-sensing.vercel.app/
 
 ## How can I edit this code?
 
