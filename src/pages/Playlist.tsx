@@ -2,56 +2,57 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Music, Play } from "lucide-react";
+import { ArrowLeft, Music, Play, Square } from "lucide-react";
 import { toast } from "sonner";
 
 interface Song {
   title: string;
   artist: string;
+  url: string;
 }
 
 const moodPlaylists: Record<string, Song[]> = {
   Happy: [
-    { title: "Happy", artist: "Pharrell Williams" },
-    { title: "Good Vibrations", artist: "The Beach Boys" },
-    { title: "Walking on Sunshine", artist: "Katrina and the Waves" },
-    { title: "Don't Stop Me Now", artist: "Queen" },
-    { title: "I Gotta Feeling", artist: "Black Eyed Peas" },
+    { title: "Beautiful Stress Relief", artist: "Ambient Mix", url: "/songs/beautiful-stress-relief-ambient-184569.mp3" },
+    { title: "Instant Stress Relief", artist: "Tibetan Singing Bowls", url: "/songs/instant-stress-relief-nature-sounds-amp-tibetan-singing-bowls-361111.mp3" },
+    { title: "Relaxation Meditation", artist: "La Sérénité", url: "/songs/relaxation_meditation-anti-stress-trouver-la-serenite-352266.mp3" },
+    { title: "Soft Massage Music", artist: "Sleep Meditation", url: "/songs/soft-massage-music-sleep-meditation-ultimate-stress-relief-337588.mp3" },
+    { title: "Tension", artist: "Instrumental", url: "/songs/tension-292489.mp3" },
   ],
   Sad: [
-    { title: "Someone Like You", artist: "Adele" },
-    { title: "The Scientist", artist: "Coldplay" },
-    { title: "Hurt", artist: "Johnny Cash" },
-    { title: "Mad World", artist: "Gary Jules" },
-    { title: "Tears in Heaven", artist: "Eric Clapton" },
+    { title: "Tension", artist: "Instrumental", url: "/songs/tension-292489.mp3" },
+    { title: "Soft Massage Music", artist: "Meditation Mix", url: "/songs/soft-massage-music-sleep-meditation-ultimate-stress-relief-337588.mp3" },
+    { title: "Relaxation Meditation", artist: "Anti-Stress Therapy", url: "/songs/relaxation_meditation-anti-stress-trouver-la-serenite-352266.mp3" },
+    { title: "Instant Stress Relief", artist: "Nature Sounds", url: "/songs/instant-stress-relief-nature-sounds-amp-tibetan-singing-bowls-361111.mp3" },
+    { title: "Beautiful Stress Relief", artist: "Ambient", url: "/songs/beautiful-stress-relief-ambient-184569.mp3" },
   ],
   Angry: [
-    { title: "Break Stuff", artist: "Limp Bizkit" },
-    { title: "Killing in the Name", artist: "Rage Against the Machine" },
-    { title: "Bodies", artist: "Drowning Pool" },
-    { title: "Enter Sandman", artist: "Metallica" },
-    { title: "Smells Like Teen Spirit", artist: "Nirvana" },
+    { title: "Relaxation Meditation", artist: "Mind Calm", url: "/songs/relaxation_meditation-anti-stress-trouver-la-serenite-352266.mp3" },
+    { title: "Soft Massage Music", artist: "Peaceful Tones", url: "/songs/soft-massage-music-sleep-meditation-ultimate-stress-relief-337588.mp3" },
+    { title: "Beautiful Stress Relief", artist: "Ambient Peace", url: "/songs/beautiful-stress-relief-ambient-184569.mp3" },
+    { title: "Instant Stress Relief", artist: "Tibetan Bowls", url: "/songs/instant-stress-relief-nature-sounds-amp-tibetan-singing-bowls-361111.mp3" },
+    { title: "Tension", artist: "Calm Release", url: "/songs/tension-292489.mp3" },
   ],
   Anxious: [
-    { title: "Breathe Me", artist: "Sia" },
-    { title: "Weightless", artist: "Marconi Union" },
-    { title: "Clair de Lune", artist: "Claude Debussy" },
-    { title: "Gymnopedie No. 1", artist: "Erik Satie" },
-    { title: "River Flows in You", artist: "Yiruma" },
+    { title: "Instant Stress Relief", artist: "Nature Relax", url: "/songs/instant-stress-relief-nature-sounds-amp-tibetan-singing-bowls-361111.mp3" },
+    { title: "Relaxation Meditation", artist: "Deep Focus", url: "/songs/relaxation_meditation-anti-stress-trouver-la-serenite-352266.mp3" },
+    { title: "Soft Massage Music", artist: "Sleep Therapy", url: "/songs/soft-massage-music-sleep-meditation-ultimate-stress-relief-337588.mp3" },
+    { title: "Tension", artist: "Instrumental", url: "/songs/tension-292489.mp3" },
+    { title: "Beautiful Stress Relief", artist: "Ambient Mix", url: "/songs/beautiful-stress-relief-ambient-184569.mp3" },
   ],
   Calm: [
-    { title: "Weightless", artist: "Marconi Union" },
-    { title: "Sunset Lover", artist: "Petit Biscuit" },
-    { title: "Islands", artist: "Ludovico Einaudi" },
-    { title: "Holocene", artist: "Bon Iver" },
-    { title: "Pure Shores", artist: "All Saints" },
+    { title: "Beautiful Stress Relief", artist: "Ambient", url: "/songs/beautiful-stress-relief-ambient-184569.mp3" },
+    { title: "Instant Stress Relief", artist: "Nature Sounds", url: "/songs/instant-stress-relief-nature-sounds-amp-tibetan-singing-bowls-361111.mp3" },
+    { title: "Relaxation Meditation", artist: "La Sérénité", url: "/songs/relaxation_meditation-anti-stress-trouver-la-serenite-352266.mp3" },
+    { title: "Soft Massage Music", artist: "Sleep Meditation", url: "/songs/soft-massage-music-sleep-meditation-ultimate-stress-relief-337588.mp3" },
+    { title: "Tension", artist: "Instrumental", url: "/songs/tension-292489.mp3" },
   ],
   Tired: [
-    { title: "Moonlight Sonata", artist: "Beethoven" },
-    { title: "Nocturne in E-flat", artist: "Chopin" },
-    { title: "Spiegel im Spiegel", artist: "Arvo Pärt" },
-    { title: "Sleep", artist: "Max Richter" },
-    { title: "Clair de Lune", artist: "Claude Debussy" },
+    { title: "Soft Massage Music", artist: "Sleep Therapy", url: "/songs/soft-massage-music-sleep-meditation-ultimate-stress-relief-337588.mp3" },
+    { title: "Relaxation Meditation", artist: "Peaceful Mind", url: "/songs/relaxation_meditation-anti-stress-trouver-la-serenite-352266.mp3" },
+    { title: "Beautiful Stress Relief", artist: "Ambient Dreams", url: "/songs/beautiful-stress-relief-ambient-184569.mp3" },
+    { title: "Instant Stress Relief", artist: "Nature Calm", url: "/songs/instant-stress-relief-nature-sounds-amp-tibetan-singing-bowls-361111.mp3" },
+    { title: "Tension", artist: "Instrumental Chill", url: "/songs/tension-292489.mp3" },
   ],
 };
 
@@ -59,6 +60,8 @@ const Playlist = () => {
   const navigate = useNavigate();
   const [currentMood, setCurrentMood] = useState<string | null>(null);
   const [playlist, setPlaylist] = useState<Song[]>([]);
+  const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
+  const [playingSong, setPlayingSong] = useState<string | null>(null);
 
   useEffect(() => {
     const history = JSON.parse(localStorage.getItem("mood_history") || "[]");
@@ -69,25 +72,31 @@ const Playlist = () => {
     }
   }, []);
 
+  // 🎵 Play selected song
   const handlePlaySong = (song: Song) => {
-    // Create a simple audio notification
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    oscillator.frequency.value = 440;
-    oscillator.type = 'sine';
-    
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-    
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.5);
-    
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+    }
+
+    const audio = new Audio(song.url);
+    setCurrentAudio(audio);
+    setPlayingSong(song.title);
+    audio.play();
+
     toast.success(`Now playing: ${song.title} by ${song.artist}`);
+
+    audio.onended = () => setPlayingSong(null);
+  };
+
+  // 🛑 Stop current song
+  const handleStopSong = () => {
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+      setPlayingSong(null);
+      toast.message("Playback stopped");
+    }
   };
 
   if (!currentMood) {
@@ -140,9 +149,7 @@ const Playlist = () => {
               </div>
               <div>
                 <CardTitle>Your {currentMood} Playlist</CardTitle>
-                <CardDescription>
-                  Curated songs to match your current mood
-                </CardDescription>
+                <CardDescription>Curated songs to match your current mood</CardDescription>
               </div>
             </div>
           </CardHeader>
@@ -151,20 +158,25 @@ const Playlist = () => {
               {playlist.map((song, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-4 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors"
+                  className={`flex items-center justify-between p-4 rounded-lg transition-colors ${
+                    playingSong === song.title
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-secondary/50 hover:bg-secondary"
+                  }`}
                 >
                   <div>
                     <p className="font-medium">{song.title}</p>
                     <p className="text-sm text-muted-foreground">{song.artist}</p>
                   </div>
-                  <Button
-                    onClick={() => handlePlaySong(song)}
-                    size="sm"
+                  <div className="flex gap-2">
+                     <Button
                     variant="ghost"
-                    className="rounded-full"
+                    onClick={() => {playingSong ? handleStopSong() : handlePlaySong(song)}}
+                    className="text-blue-600 hover:text-blue-800"
                   >
-                    <Play className="w-4 h-4" />
+                    {playingSong  ? <Square /> : <Play />}
                   </Button>
+                  </div>
                 </div>
               ))}
             </div>
